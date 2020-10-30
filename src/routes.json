@@ -7,6 +7,14 @@
         "title": "About"
     },
     {
+        "name": "annual-report",
+        "pattern": "^/annual-report/?$",
+        "routeAlias": "/annual-report/?$",
+        "view": "annual-report/annual-report",
+        "title": "Annual Report",
+        "viewportWidth": "device-width"
+    },
+    {
         "name": "camp",
         "pattern": "^/camp/?$",
         "routeAlias": "/camp/?$",
@@ -281,6 +289,13 @@
         "title": "Class Registration"
     },
     {
+        "name": "student-registration-token-only",
+        "pattern": "^/signup/:token",
+        "routeAlias": "/signup/.+",
+        "view": "studentregistration/studentregistration",
+        "title": "Class Registration"
+    },
+    {
         "name": "teacher-faq",
         "pattern": "^/educators/faq/?$",
         "routeAlias": "/educators(?:/(faq|register|waiting))?/?$",
@@ -428,6 +443,12 @@
         "redirect": "/ideas"
     },
     {
+        "name": "register-redirect",
+        "pattern": "^/accounts/standalone-registration/?$",
+        "routeAlias": "/accounts/standalone-registration/",
+        "redirect": "/join"
+    },
+    {
         "name": "research-redirect",
         "pattern": "^/info/research/?$",
         "routeAlias": "/info/research",
@@ -491,6 +512,16 @@
         "name": "pong-tutorial-redirect",
         "pattern": "^/pong/?$",
         "redirect": "/projects/editor/?tutorial=pong"
+    },
+    {
+        "name": "animateacharacter-tutorial-redirect",
+        "pattern": "^/animate-a-character/?$",
+        "redirect": "/projects/editor/?tutorial=animate-a-character"
+    },
+    {
+        "name": "videosensing-tutorial-redirect",
+        "pattern": "^/video-sensing/?$",
+        "redirect": "/projects/editor/?tutorial=video-sensing"
     },
     {
         "name": "clicker-tutorial-redirect",

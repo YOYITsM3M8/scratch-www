@@ -8,5 +8,5 @@ const flagInUrl = flag => {
 };
 
 module.exports = {
-    CHROME_APP_RELEASED: true
+    CONTACT_US_POPUP: flagInUrl('CONTACT_US_POPUP')
 };

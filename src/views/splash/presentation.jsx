@@ -26,7 +26,8 @@ const Welcome = require('../../components/welcome/welcome.jsx');
 const BecomeCuratorMessage = require('./activity-rows/become-curator.jsx');
 const BecomeManagerMessage = require('./activity-rows/become-manager.jsx');
 const FavoriteProjectMessage = require('./activity-rows/favorite-project.jsx');
-const FollowMessage = require('./activity-rows/follow.jsx');
+const FollowUserMessage = require('./activity-rows/follow-user.jsx');
+const FollowStudioMessage = require('./activity-rows/follow-studio.jsx');
 const LoveProjectMessage = require('./activity-rows/love-project.jsx');
 const RemixProjectMessage = require('./activity-rows/remix-project.jsx');
 const ShareProjectMessage = require('./activity-rows/share-project.jsx');
@@ -53,7 +54,7 @@ class ActivityList extends React.Component {
         switch (message.type) {
         case 'followuser':
             return (
-                <FollowMessage
+                <FollowUserMessage
                     followDateTime={message.datetime_created}
                     followeeId={message.followed_username}
                     followerUsername={message.actor_username}
@@ -62,12 +63,12 @@ class ActivityList extends React.Component {
             );
         case 'followstudio':
             return (
-                <FollowMessage
+                <FollowStudioMessage
                     followDateTime={message.datetime_created}
-                    followeeId={message.gallery_id}
-                    followeeTitle={message.title}
                     followerUsername={message.actor_username}
                     key={key}
+                    studioId={message.gallery_id}
+                    studioTitle={message.title}
                 />
             );
         case 'loveproject':
@@ -178,16 +179,10 @@ class ActivityList extends React.Component {
                         key="activity-empty"
                     >
                         <h4>
-                            <FormattedMessage
-                                defaultMessage="This is where you will see updates from Scratchers you follow"
-                                id="activity.seeUpdates"
-                            />
+                            <FormattedMessage id="activity.seeUpdates" />
                         </h4>
                         <a href="/studios/146521/">
-                            <FormattedMessage
-                                defaultMessage="Check out some Scratchers you might like to follow"
-                                id="activity.checkOutScratchers"
-                            />
+                            <FormattedMessage id="activity.checkOutScratchers" />
                         </a>
                     </div>
                 ]}

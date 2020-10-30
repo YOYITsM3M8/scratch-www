@@ -28,6 +28,7 @@ const Spinner = require('../../components/spinner/spinner.jsx');
 const StepNavigation = require('../../components/stepnavigation/stepnavigation.jsx');
 const TextArea = require('../../components/forms/textarea.jsx');
 const Tooltip = require('../../components/tooltip/tooltip.jsx');
+const ValidationMessage = require('../../components/forms/validation-message.jsx');
 
 require('./steps.scss');
 
@@ -84,11 +85,13 @@ class UsernameStep extends React.Component {
             'handleChangeShowPassword',
             'handleUsernameBlur',
             'handleValidSubmit',
-            'validateUsername'
+            'validateUsername',
+            'handleFocus'
         ]);
         this.state = {
             showPassword: props.showPassword,
             waiting: false,
+            showUsernameTip: true,
             validUsername: ''
         };
     }
@@ -159,6 +162,9 @@ class UsernameStep extends React.Component {
             if (isValid) return this.props.onNextStep(formData);
         });
     }
+    handleFocus () {
+        this.setState({showUsernameTip: false});
+    }
     render () {
         return (
             <Slide className="registration-step username-step">
@@ -174,7 +180,7 @@ class UsernameStep extends React.Component {
                         this.props.description
                     ) : (
                         <span>
-                            <intl.FormattedMessage id="registration.usernameStepDescription" />
+                            <intl.FormattedMessage id="registration.usernameStepDescription" />&nbsp;
                             <b>
                                 <intl.FormattedMessage id="registration.usernameStepRealName" />
                             </b>
@@ -205,6 +211,13 @@ class UsernameStep extends React.Component {
                                     null
                                 )}
                             </label>
+                            { this.state.showUsernameTip &&
+                                <ValidationMessage
+                                    className={'validation-full-width-input'}
+                                    message={this.props.intl.formatMessage({id: 'registration.usernameAdviceShort'})}
+                                    mode="info"
+                                />
+                            }
                             <Input
                                 required
                                 className={this.state.validUsername}
@@ -227,6 +240,7 @@ class UsernameStep extends React.Component {
                                     maxLength: 20
                                 }}
                                 onBlur={this.handleUsernameBlur}
+                                onFocus={this.handleFocus}
                             />
                         </div>
                         <Input
@@ -253,6 +267,7 @@ class UsernameStep extends React.Component {
                                 notEqualsField: 'user.username'
                             }}
                         />
+
                         <Checkbox
                             help={null}
                             name="showPassword"
@@ -438,15 +453,21 @@ class DemographicsStep extends React.Component {
     handleChooseGender (name, gender) {
         this.setState({otherDisabled: gender !== 'other'});
     }
-    // look up country name using user's country code selection
+    // look up country name using user's country code selection ('us' -> 'United States')
     getCountryName (values) {
         if (values.countryCode) {
-            const countryInfo = countryData.lookupCountryInfo(values.countryCode);
+            const countryInfo = countryData.lookupCountryByCode(values.countryCode);
             if (countryInfo) {
                 return countryInfo.name;
             }
         }
         return null;
+    }
+    // look up country code from country label ('United States' -> 'us')
+    // if `countryName` is not found, including if it's null or undefined, then this function will return undefined.
+    getCountryCode (countryName) {
+        const country = countryData.lookupCountryByName(countryName);
+        return country && country.code;
     }
     handleValidSubmit (formData) {
         const countryName = this.getCountryName(formData);
@@ -558,7 +579,7 @@ class DemographicsStep extends React.Component {
                             validations={{
                                 countryVal: values => this.countryValidator(values)
                             }}
-                            value={countryOptions[0].value}
+                            value={this.getCountryCode(this.props.countryName) || countryOptions[0].value}
                         />
                         <Checkbox
                             className="demographics-checkbox-is-robot"
@@ -583,6 +604,7 @@ class DemographicsStep extends React.Component {
 DemographicsStep.propTypes = {
     activeStep: PropTypes.number,
     birthOffset: PropTypes.number,
+    countryName: PropTypes.string, // like 'United States', not 'US' or 'United States of America'
     description: PropTypes.string,
     intl: intlShape,
     onNextStep: PropTypes.func,

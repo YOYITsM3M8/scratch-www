@@ -2,9 +2,9 @@ const React = require('react');
 const render = require('../../lib/render.jsx');
 const FormattedMessage = require('react-intl').FormattedMessage;
 const injectIntl = require('react-intl').injectIntl;
-const Avatar = require('../../components/avatar/avatar.jsx');
 const Page = require('../../components/page/www/page.jsx');
 const People = require('./people.json');
+const PeopleGrid = require('../../components/people-grid/people-grid.jsx');
 const Supporters = require('./supporters.json');
 const TitleBanner = require('../../components/title-banner/title-banner.jsx');
 
@@ -25,34 +25,7 @@ const Credits = () => (
                         <FormattedMessage id="credits.developers" />
                     </p>
                 </div>
-                <ul className="avatar-grid">
-                    {People.map((person, index) => (
-                        <li
-                            className="avatar-item"
-                            key={`person-${index}`}
-                        >
-                            <div>
-                                {person.userName ? (
-                                    <a href={`https://scratch.mit.edu/users/${person.userName}/`}>
-                                        <Avatar
-                                            alt=""
-                                            src={`https://cdn.scratch.mit.edu/get_image/user/${person.userId || 'default'}_80x80.png`}
-                                        />
-                                    </a>
-                                ) : (
-                                    /* if userName is not given, there's no chance userId is given */
-                                    <Avatar
-                                        alt=""
-                                        src={`https://cdn.scratch.mit.edu/get_image/user/default_80x80.png`}
-                                    />
-                                )}
-                            </div>
-                            <span className="avatar-text">
-                                {person.name}
-                            </span>
-                        </li>
-                    ))}
-                </ul>
+                <PeopleGrid people={People} />
             </div>
             <div
                 className="supporters"
@@ -109,7 +82,7 @@ const Credits = () => (
                         id="credits.acknowledgementsTranslators"
                         values={{
                             translatorsLink: (
-                                <a href="http://wiki.scratch.mit.edu/wiki/Translators">
+                                <a href="https://en.scratch-wiki.info/wiki/Translators">
                                     <FormattedMessage id="credits.acknowledgementsTranslatorsLinkText" />
                                 </a>
                             )
@@ -151,15 +124,15 @@ const Credits = () => (
                     {' '}
                     Ben Berg, Amos Blanton, Karen Brennan, Juanita Buitrago,
                     Leo Burd, Gaia Carini, Kasia Chmielinski, Michelle Chung,
-                    Shane Clements, Hannah Cole, Ellen Daoust, Sayamindu Dasgupta,
-                    Margarita Dekoli, Dave Feinberg, Linda Fernsel,
+                    Shane Clements, Hannah Cole, Sayamindu Dasgupta,
+                    Margarita Dekoli, Dave Feinberg, Linda Fernsel, Elizabeth Foster,
                     Chris Graves, Joel Gritter, Megan Haddadi, Connor Hudson,
                     Christina Huang, Tony Hwang, Abdulrahman Idlbi, Randy Jou,
                     Lily Kim, Tauntaun Kim, Saskia Leggett, Tim Mickel,
-                    Amon Millner, My Nguyen, Lisa O&apos;Brien, Tina Quach,
-                    Ricarose Roque, Andrea Saxman, Jay Silver, Tammy Stern,
-                    Lis Sylvan, Hanako Tjia, Claudia Urrea, Julia Zimmerman,
-                    Oren Zuckerman.
+                    Amon Millner, My Nguyen, Lisa O&apos;Brien, Abisola Okuk,
+                    Tina Quach, Ricarose Roque, Andrea Saxman, Jay Silver,
+                    Andrew Sliwinski, Tammy Stern, Lis Sylvan, Hanako Tjia,
+                    Claudia Urrea, Julia Zimmerman, Oren Zuckerman.
                 </p>
                 <p>
                     <FormattedMessage id="credits.partnersBody" />
