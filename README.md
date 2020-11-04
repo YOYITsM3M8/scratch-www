@@ -53,6 +53,7 @@ See the [LICENSE](https://github.com/LLK/scratch-www/blob/master/LICENSE) file i
 
 Here are some resources to help you get acquainted with how we’re working on the Scratch codebase:
 
+* [Contributor Guidelines](https://github.com/LLK/scratch-www/blob/develop/.github/CONTRIBUTING.md)
 * [Style Guide](https://github.com/LLK/scratch-www/wiki/Style-Guide)
 * [Testing Guide](https://github.com/LLK/scratch-www/wiki/Testing-Guide-for-Bugfixes)
 * [Localization Guide](https://github.com/LLK/scratch-www/wiki/Localization-Guide)
@@ -214,8 +215,12 @@ so for the time being our tests run using both.
 To run all integration tests from the command-line:
 
 ```bash
-SMOKE_USERNAME=username SMOKE_PASSWORD=password ROOT_URL=https://scratch.mit.edu npm run test:integration
+SMOKE_USERNAME=username SMOKE_PASSWORD=password ROOT_URL=https://scratch.mit.edu TEST_PROJECT_ID=1 npm run test:integration
 ```
+
+Both the TAP and Jest tests use the same username and password.  The Jest tests will also use the the username you give with a 1 (soon to be higher numbers as well) appended to the end of it.  So if you use the username "test" it will also use the username "test1."  Make sure you have created accounts with this pattern and use the same password for all accounts involved.
+
+The project page tests require a project id included as an environment variable to pass.  The project must be shared and must have at least one remix.  At this time, the project does not need to be owned by one of the test users, but that is likely to change.
 
 To run a single file from the command-line using Jest:
 
